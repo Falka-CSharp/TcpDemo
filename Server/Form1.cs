@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Threading;
+using System.Xml.Linq;
 
 namespace Server
 {
@@ -22,9 +23,14 @@ namespace Server
         TcpListener listener;
         Thread listenerThread;
 
+        string path1;
+        XDocument doc1;
+
         public Form1()
         {
             InitializeComponent();
+            path1 = @"..\..\Data\accounts.xml";
+            doc1 = XDocument.Load(path1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -56,25 +62,45 @@ namespace Server
                 string clientMessage = sr.ReadToEnd();
 
                 string[] parts = clientMessage.Split('#');
-                if (parts.Length > 2) {
-                    string command = parts[0];
-                    if(command == "auth")
+                try
+                {
+                    if (parts.Length > 0)
                     {
-                        Journal.Text += "AUTH-mode activated\r\n";
+                        string command = parts[0];
+                        if (command == "auth")
+                        {
+                            Journal.Text += "AUTH-mode activated\r\n";
+                            string login = parts[1];
+                            string passw = parts[2];
+                            Journal.Text += $"{login} / {passw}\r\n";
 
-                    }else if (command == "get")
-                    {
+                            var account = doc1.Element("root").Elements("account").Where(a=>a.Attribute("login").Value==login && a.Attribute("password").Value==passw).FirstOrDefault();
+                            string serverMessage = "";
+                            if (account != null)
+                                serverMessage = "yes";
+                            else
+                                serverMessage = "no";
+                        }
+                        else if (command == "get")
+                        {
 
-                    }else if(command == "add")
-                    {
+                        }
+                        else if (command == "add")
+                        {
 
-                    }else if(command == "edit")
-                    {
+                        }
+                        else if (command == "edit")
+                        {
 
-                    }else if (command == "delete")
-                    {
+                        }
+                        else if (command == "delete")
+                        {
 
+                        }
                     }
+                }catch(Exception er)
+                {
+                    MessageBox.Show($"Error!\r\n{er.Message}", "Reciving error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 sr.Close();
                 ns.Close();

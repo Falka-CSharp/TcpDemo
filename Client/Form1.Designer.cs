@@ -33,12 +33,12 @@ namespace Client
             this.label2 = new System.Windows.Forms.Label();
             this.ipAddressTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.loginTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.disconnectButton = new System.Windows.Forms.Button();
+            this.connectButton = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -47,14 +47,16 @@ namespace Client
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.taskTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.DescriptionTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.StatusTextBox = new System.Windows.Forms.TextBox();
+            this.startDateTextBox = new System.Windows.Forms.DateTimePicker();
+            this.endDateTextBox = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -98,13 +100,13 @@ namespace Client
             this.label1.TabIndex = 5;
             this.label1.Text = "IpAddress:";
             // 
-            // textBox1
+            // loginTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(94, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 24);
-            this.textBox1.TabIndex = 10;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.loginTextBox.Location = new System.Drawing.Point(94, 16);
+            this.loginTextBox.Name = "loginTextBox";
+            this.loginTextBox.Size = new System.Drawing.Size(100, 24);
+            this.loginTextBox.TabIndex = 10;
+            this.loginTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label3
             // 
@@ -116,13 +118,13 @@ namespace Client
             this.label3.TabIndex = 9;
             this.label3.Text = "Login:";
             // 
-            // textBox2
+            // passwordTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(94, 47);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 24);
-            this.textBox2.TabIndex = 12;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.passwordTextBox.Location = new System.Drawing.Point(94, 47);
+            this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.Size = new System.Drawing.Size(100, 24);
+            this.passwordTextBox.TabIndex = 12;
+            this.passwordTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label4
             // 
@@ -134,23 +136,24 @@ namespace Client
             this.label4.TabIndex = 11;
             this.label4.Text = "Password:";
             // 
-            // button1
+            // disconnectButton
             // 
-            this.button1.Location = new System.Drawing.Point(6, 87);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 26);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Disconnect";
-            this.button1.UseVisualStyleBackColor = true;
+            this.disconnectButton.Location = new System.Drawing.Point(6, 87);
+            this.disconnectButton.Name = "disconnectButton";
+            this.disconnectButton.Size = new System.Drawing.Size(94, 26);
+            this.disconnectButton.TabIndex = 13;
+            this.disconnectButton.Text = "Disconnect";
+            this.disconnectButton.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // connectButton
             // 
-            this.button2.Location = new System.Drawing.Point(117, 87);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(93, 26);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Connect";
-            this.button2.UseVisualStyleBackColor = true;
+            this.connectButton.Location = new System.Drawing.Point(117, 87);
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(93, 26);
+            this.connectButton.TabIndex = 14;
+            this.connectButton.Text = "Connect";
+            this.connectButton.UseVisualStyleBackColor = true;
+            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
             // button4
             // 
@@ -176,11 +179,11 @@ namespace Client
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.connectButton);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.ipAddressTextBox);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.disconnectButton);
             this.groupBox2.Controls.Add(this.portTextBox);
             this.groupBox2.Location = new System.Drawing.Point(388, 12);
             this.groupBox2.Name = "groupBox2";
@@ -191,10 +194,10 @@ namespace Client
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.loginTextBox);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.passwordTextBox);
             this.groupBox3.Location = new System.Drawing.Point(12, 14);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(370, 81);
@@ -236,16 +239,16 @@ namespace Client
             this.listBox1.Location = new System.Drawing.Point(134, 101);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(248, 256);
+            this.listBox1.Size = new System.Drawing.Size(248, 364);
             this.listBox1.TabIndex = 20;
             // 
-            // textBox3
+            // taskTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(403, 165);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(210, 24);
-            this.textBox3.TabIndex = 13;
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.taskTextBox.Location = new System.Drawing.Point(403, 165);
+            this.taskTextBox.Name = "taskTextBox";
+            this.taskTextBox.Size = new System.Drawing.Size(210, 24);
+            this.taskTextBox.TabIndex = 13;
+            this.taskTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label5
             // 
@@ -267,14 +270,14 @@ namespace Client
             this.label6.TabIndex = 22;
             this.label6.Text = "Description:";
             // 
-            // textBox4
+            // DescriptionTextBox
             // 
-            this.textBox4.Location = new System.Drawing.Point(403, 222);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(210, 99);
-            this.textBox4.TabIndex = 21;
-            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DescriptionTextBox.Location = new System.Drawing.Point(403, 222);
+            this.DescriptionTextBox.Multiline = true;
+            this.DescriptionTextBox.Name = "DescriptionTextBox";
+            this.DescriptionTextBox.Size = new System.Drawing.Size(210, 99);
+            this.DescriptionTextBox.TabIndex = 21;
+            this.DescriptionTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label7
             // 
@@ -286,14 +289,6 @@ namespace Client
             this.label7.TabIndex = 24;
             this.label7.Text = "Start:";
             // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(403, 345);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(210, 24);
-            this.textBox5.TabIndex = 23;
-            this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -304,27 +299,54 @@ namespace Client
             this.label8.TabIndex = 26;
             this.label8.Text = "End:";
             // 
-            // textBox6
+            // label9
             // 
-            this.textBox6.Location = new System.Drawing.Point(403, 393);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(210, 24);
-            this.textBox6.TabIndex = 25;
-            this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(400, 423);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(54, 18);
+            this.label9.TabIndex = 28;
+            this.label9.Text = "Status:";
+            // 
+            // StatusTextBox
+            // 
+            this.StatusTextBox.Location = new System.Drawing.Point(403, 444);
+            this.StatusTextBox.Name = "StatusTextBox";
+            this.StatusTextBox.Size = new System.Drawing.Size(210, 24);
+            this.StatusTextBox.TabIndex = 27;
+            this.StatusTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // startDateTextBox
+            // 
+            this.startDateTextBox.Location = new System.Drawing.Point(403, 349);
+            this.startDateTextBox.MaxDate = new System.DateTime(9997, 12, 31, 0, 0, 0, 0);
+            this.startDateTextBox.Name = "startDateTextBox";
+            this.startDateTextBox.Size = new System.Drawing.Size(210, 24);
+            this.startDateTextBox.TabIndex = 29;
+            // 
+            // endDateTextBox
+            // 
+            this.endDateTextBox.Location = new System.Drawing.Point(403, 396);
+            this.endDateTextBox.Name = "endDateTextBox";
+            this.endDateTextBox.Size = new System.Drawing.Size(210, 24);
+            this.endDateTextBox.TabIndex = 30;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 429);
+            this.ClientSize = new System.Drawing.Size(625, 483);
+            this.Controls.Add(this.endDateTextBox);
+            this.Controls.Add(this.startDateTextBox);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.StatusTextBox);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox6);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox5);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.DescriptionTextBox);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.taskTextBox);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -333,6 +355,7 @@ namespace Client
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Task-manager-client";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -349,12 +372,12 @@ namespace Client
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox ipAddressTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox loginTextBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button disconnectButton;
+        private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button7;
@@ -363,14 +386,16 @@ namespace Client
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox taskTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox DescriptionTextBox;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox StatusTextBox;
+        private System.Windows.Forms.DateTimePicker startDateTextBox;
+        private System.Windows.Forms.DateTimePicker endDateTextBox;
     }
 }
 
