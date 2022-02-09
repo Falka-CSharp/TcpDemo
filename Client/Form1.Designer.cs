@@ -39,14 +39,14 @@ namespace Client
             this.label4 = new System.Windows.Forms.Label();
             this.disconnectButton = new System.Windows.Forms.Button();
             this.connectButton = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.tasks_button = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.delete_button = new System.Windows.Forms.Button();
+            this.edit_button = new System.Windows.Forms.Button();
+            this.add_button = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.taskList = new System.Windows.Forms.ListBox();
             this.taskTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -138,6 +138,7 @@ namespace Client
             // 
             // disconnectButton
             // 
+            this.disconnectButton.Enabled = false;
             this.disconnectButton.Location = new System.Drawing.Point(6, 87);
             this.disconnectButton.Name = "disconnectButton";
             this.disconnectButton.Size = new System.Drawing.Size(94, 26);
@@ -155,27 +156,59 @@ namespace Client
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
-            // button4
+            // tasks_button
             // 
-            this.button4.Location = new System.Drawing.Point(6, 23);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(94, 26);
-            this.button4.TabIndex = 16;
-            this.button4.Text = "My tasks";
-            this.button4.UseVisualStyleBackColor = true;
+            this.tasks_button.Enabled = false;
+            this.tasks_button.Location = new System.Drawing.Point(6, 23);
+            this.tasks_button.Name = "tasks_button";
+            this.tasks_button.Size = new System.Drawing.Size(94, 26);
+            this.tasks_button.TabIndex = 16;
+            this.tasks_button.Text = "My tasks";
+            this.tasks_button.UseVisualStyleBackColor = true;
+            this.tasks_button.Click += new System.EventHandler(this.tasks_button_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button7);
-            this.groupBox1.Controls.Add(this.button6);
-            this.groupBox1.Controls.Add(this.button5);
-            this.groupBox1.Controls.Add(this.button4);
+            this.groupBox1.Controls.Add(this.delete_button);
+            this.groupBox1.Controls.Add(this.edit_button);
+            this.groupBox1.Controls.Add(this.add_button);
+            this.groupBox1.Controls.Add(this.tasks_button);
             this.groupBox1.Location = new System.Drawing.Point(12, 101);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(107, 158);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tasks";
+            // 
+            // delete_button
+            // 
+            this.delete_button.Enabled = false;
+            this.delete_button.Location = new System.Drawing.Point(6, 120);
+            this.delete_button.Name = "delete_button";
+            this.delete_button.Size = new System.Drawing.Size(94, 26);
+            this.delete_button.TabIndex = 19;
+            this.delete_button.Text = "Delete";
+            this.delete_button.UseVisualStyleBackColor = true;
+            // 
+            // edit_button
+            // 
+            this.edit_button.Enabled = false;
+            this.edit_button.Location = new System.Drawing.Point(6, 88);
+            this.edit_button.Name = "edit_button";
+            this.edit_button.Size = new System.Drawing.Size(94, 26);
+            this.edit_button.TabIndex = 18;
+            this.edit_button.Text = "Edit";
+            this.edit_button.UseVisualStyleBackColor = true;
+            // 
+            // add_button
+            // 
+            this.add_button.Enabled = false;
+            this.add_button.Location = new System.Drawing.Point(6, 58);
+            this.add_button.Name = "add_button";
+            this.add_button.Size = new System.Drawing.Size(94, 26);
+            this.add_button.TabIndex = 17;
+            this.add_button.Text = "Add";
+            this.add_button.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -205,42 +238,16 @@ namespace Client
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Authorization";
             // 
-            // button5
+            // taskList
             // 
-            this.button5.Location = new System.Drawing.Point(6, 58);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(94, 26);
-            this.button5.TabIndex = 17;
-            this.button5.Text = "Add";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(6, 88);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(94, 26);
-            this.button6.TabIndex = 18;
-            this.button6.Text = "Edit";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(6, 120);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(94, 26);
-            this.button7.TabIndex = 19;
-            this.button7.Text = "Delete";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 18;
-            this.listBox1.Location = new System.Drawing.Point(134, 101);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(248, 364);
-            this.listBox1.TabIndex = 20;
+            this.taskList.FormattingEnabled = true;
+            this.taskList.ItemHeight = 18;
+            this.taskList.Location = new System.Drawing.Point(134, 101);
+            this.taskList.Name = "taskList";
+            this.taskList.ScrollAlwaysVisible = true;
+            this.taskList.Size = new System.Drawing.Size(248, 364);
+            this.taskList.TabIndex = 20;
+            this.taskList.SelectedIndexChanged += new System.EventHandler(this.taskList_SelectedIndexChanged);
             // 
             // taskTextBox
             // 
@@ -347,12 +354,12 @@ namespace Client
             this.Controls.Add(this.DescriptionTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.taskTextBox);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.taskList);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Task-manager-client";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -378,14 +385,14 @@ namespace Client
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button disconnectButton;
         private System.Windows.Forms.Button connectButton;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button tasks_button;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button delete_button;
+        private System.Windows.Forms.Button edit_button;
+        private System.Windows.Forms.Button add_button;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox taskList;
         private System.Windows.Forms.TextBox taskTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;

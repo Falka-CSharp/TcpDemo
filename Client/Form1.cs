@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using Models;
+using System.Text.Json;
+
 namespace Client
 {
     public partial class Form1 : Form
@@ -18,10 +21,11 @@ namespace Client
         IPAddress ip;
         IPEndPoint ep;
         TcpClient client;
-
+        List<MyTask> tasks;
         public Form1()
         {
             InitializeComponent();
+            tasks = new List<MyTask>();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -41,7 +45,24 @@ namespace Client
                 client.Connect(ep);
                 NetworkStream ns = client.GetStream();
                 StreamWriter sw = new StreamWriter(ns);
-                sw.Write(clientMessage);
+                sw.WriteLine(clientMessage);
+                sw.Flush();
+                StreamReader sr = new StreamReader(ns);
+                string serverMessage = sr.ReadLine();
+                //MessageBox.Show(serverMessage, "Server message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (serverMessage == "yes")
+                {
+                    connectButton.Enabled = false;
+                    disconnectButton.Enabled = true;
+                    delete_button.Enabled = true;
+                    edit_button.Enabled = true;
+                    add_button.Enabled = true;
+                    tasks_button.Enabled = true;
+                }
+                else
+                    MessageBox.Show("Authorization failed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                sr.Close();
                 sw.Close();
                 ns.Close();
                 client.Close();
@@ -50,6 +71,44 @@ namespace Client
             {
                 MessageBox.Show($"Error!\r\n {err.Message}", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void tasks_button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string mess = $"get#{loginTextBox.Text}";
+                client = new TcpClient();
+                client.Connect(ep);
+
+                NetworkStream ns = client.GetStream();
+                StreamWriter sw = new StreamWriter(ns);
+                sw.WriteLine(mess);
+                sw.Flush();
+                StreamReader sr = new StreamReader(ns);
+                mess = sr.ReadLine();
+                tasks = JsonSerializer.Deserialize<List<MyTask>>(mess);
+
+                taskList.DataSource = tasks;
+                taskList.DisplayMember = "Title";
+                sr.Close();
+                sw.Close();
+                ns.Close();
+                client.Close();
+            }catch(Exception)
+            {
+                MessageBox.Show("Serializing error.\r\nMaybe you are not authorized", "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+        }
+
+        private void taskList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MyTask selectedTask = taskList.SelectedItem as MyTask;
+            taskTextBox.Text = selectedTask.Title;
+            DescriptionTextBox.Text = selectedTask.About;
+            StatusTextBox.Text = selectedTask.Status;
+            startDateTextBox.Value = selectedTask.Start;
+            endDateTextBox.Value = selectedTask.Finish;
         }
     }
 }

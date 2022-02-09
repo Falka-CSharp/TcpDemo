@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
 	<account login="test" password="qwerty"/>
+	<account login="student" password="12345"/>
+	<account login="teacher" password="12345"/>
 </root>

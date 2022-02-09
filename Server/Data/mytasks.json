@@ -1,0 +1,36 @@
+{
+  "MyTasks": [
+    {
+      "Title": "Title-1",
+      "About": "About-1",
+      "Start": "2020-02-07T00:00:00",
+      "Finish": "2020-02-07T00:00:00",
+      "Status": "In Progress",
+      "User": "teacher"
+    },
+    {
+      "Title": "Title-2",
+      "About": "About-2",
+      "Start": "2020-02-07T00:00:00",
+      "Finish": "2020-02-07T00:00:00",
+      "Status": "In Progress",
+      "User": "student"
+    },
+    {
+      "Title": "Title-3",
+      "About": "About-3",
+      "Start": "2020-02-07T00:00:00",
+      "Finish": "2020-02-07T00:00:00",
+      "Status": "Planned",
+      "User": "teacher"
+    },
+    {
+      "Title": "Title-4",
+      "About": "About-4",
+      "Start": "2020-03-07T00:00:00",
+      "Finish": "2020-03-07T00:00:00",
+      "Status": "In Progress",
+      "User": "student"
+    }
+  ]
+}
