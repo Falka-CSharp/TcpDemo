@@ -8,6 +8,7 @@ namespace Models
 {
     public class MyTask
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string About { get; set; }
         public DateTime Start { get; set; }

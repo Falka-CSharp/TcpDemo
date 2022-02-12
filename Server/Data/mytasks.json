@@ -1,23 +1,26 @@
 {
   "MyTasks": [
     {
-      "Title": "Title-1",
+      "Id": 0,
+      "Title": "Task-1",
       "About": "About-1",
-      "Start": "2020-02-07T00:00:00",
-      "Finish": "2020-02-07T00:00:00",
+      "Start": "2022-02-12T21:36:35",
+      "Finish": "2022-02-12T21:36:35",
       "Status": "In Progress",
       "User": "teacher"
     },
     {
-      "Title": "Title-2",
-      "About": "About-2",
-      "Start": "2020-02-07T00:00:00",
-      "Finish": "2020-02-07T00:00:00",
-      "Status": "In Progress",
+      "Id": 1,
+      "Title": "NewName",
+      "About": "About22",
+      "Start": "2021-02-20T00:00:00",
+      "Finish": "2023-11-07T00:00:00",
+      "Status": "Not done",
       "User": "student"
     },
     {
-      "Title": "Title-3",
+      "Id": 2,
+      "Title": "Task-3",
       "About": "About-3",
       "Start": "2020-02-07T00:00:00",
       "Finish": "2020-02-07T00:00:00",
@@ -25,10 +28,20 @@
       "User": "teacher"
     },
     {
+      "Id": 3,
       "Title": "Title-4",
       "About": "About-4",
       "Start": "2020-03-07T00:00:00",
       "Finish": "2020-03-07T00:00:00",
+      "Status": "In Progress",
+      "User": "student"
+    },
+    {
+      "Id": 4,
+      "Title": "CreatedTask",
+      "About": "This is example of task that was created from client",
+      "Start": "2009-01-29T22:15:17",
+      "Finish": "2023-02-10T22:15:17",
       "Status": "In Progress",
       "User": "student"
     }

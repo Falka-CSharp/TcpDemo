@@ -39,7 +39,7 @@ namespace Server
             // Journal
             // 
             this.Journal.Location = new System.Drawing.Point(13, 75);
-            this.Journal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Journal.Margin = new System.Windows.Forms.Padding(4);
             this.Journal.Multiline = true;
             this.Journal.Name = "Journal";
             this.Journal.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -52,7 +52,7 @@ namespace Server
             this.label1.Location = new System.Drawing.Point(13, 16);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 16);
+            this.label1.Size = new System.Drawing.Size(72, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "IpAddress:";
             // 
@@ -80,7 +80,7 @@ namespace Server
             this.label2.Location = new System.Drawing.Point(13, 42);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 16);
+            this.label2.Size = new System.Drawing.Size(34, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "Port:";
             // 
@@ -95,9 +95,9 @@ namespace Server
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Journal);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Task-maneger-server";
+            this.Text = "Task-manager-server";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

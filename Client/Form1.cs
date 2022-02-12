@@ -17,6 +17,7 @@ namespace Client
 {
     public partial class Form1 : Form
     {
+        private readonly int Ntimeout = 1000;
         int port;
         IPAddress ip;
         IPEndPoint ep;
@@ -44,6 +45,7 @@ namespace Client
                 client = new TcpClient();
                 client.Connect(ep);
                 NetworkStream ns = client.GetStream();
+                ns.ReadTimeout = Ntimeout;
                 StreamWriter sw = new StreamWriter(ns);
                 sw.WriteLine(clientMessage);
                 sw.Flush();
@@ -73,22 +75,22 @@ namespace Client
             }
         }
 
-        private void tasks_button_Click(object sender, EventArgs e)
+        private async void tasks_button_Click(object sender, EventArgs e)
         {
             try
             {
                 string mess = $"get#{loginTextBox.Text}";
                 client = new TcpClient();
                 client.Connect(ep);
-
                 NetworkStream ns = client.GetStream();
+                ns.ReadTimeout = Ntimeout;
                 StreamWriter sw = new StreamWriter(ns);
                 sw.WriteLine(mess);
                 sw.Flush();
-                StreamReader sr = new StreamReader(ns);
-                mess = sr.ReadLine();
-                tasks = JsonSerializer.Deserialize<List<MyTask>>(mess);
 
+                StreamReader sr = new StreamReader(ns);
+                mess = await sr.ReadLineAsync();
+                tasks = JsonSerializer.Deserialize<List<MyTask>>(mess);
                 taskList.DataSource = tasks;
                 taskList.DisplayMember = "Title";
                 sr.Close();
@@ -109,6 +111,112 @@ namespace Client
             StatusTextBox.Text = selectedTask.Status;
             startDateTextBox.Value = selectedTask.Start;
             endDateTextBox.Value = selectedTask.Finish;
+        }
+
+        private void disconnectButton_Click(object sender, EventArgs e)
+        {
+            connectButton.Enabled = true;
+            disconnectButton.Enabled = false;
+            delete_button.Enabled = false;
+            edit_button.Enabled = false;
+            add_button.Enabled = false;
+            tasks_button.Enabled = false;
+
+
+            try
+            {
+                client = new TcpClient();
+                client.Connect(ep);
+
+                NetworkStream ns = client.GetStream();
+                ns.ReadTimeout = Ntimeout;
+                StreamWriter sw = new StreamWriter(ns);
+                sw.WriteLine("disconnect");
+                sw.Flush();
+
+                sw.Close();
+                ns.Close();
+                client.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show($"{err.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void add_button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                client = new TcpClient();
+                client.Connect(ep);
+
+                NetworkStream ns = client.GetStream();
+                ns.ReadTimeout = Ntimeout;
+                StreamWriter sw = new StreamWriter(ns);
+
+                sw.WriteLine($"add#{loginTextBox.Text}");
+                sw.Flush();
+
+                StreamReader sr = new StreamReader(ns);
+                sr.ReadLine();
+
+                sr.Close();
+                sw.Close();
+                ns.Close();
+                client.Close();
+                tasks_button.PerformClick();
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show($"{err.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void edit_button_Click(object sender, EventArgs e)
+        {
+            if (taskList.SelectedIndex == -1) {
+                MessageBox.Show("Item not selected!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string taskName = taskTextBox.Text;
+            string taskDescription = DescriptionTextBox.Text;
+            DateTime startDate = startDateTextBox.Value;
+            DateTime endDate = endDateTextBox.Value;
+            string status = StatusTextBox.Text;
+            string sendString = $"edit#{loginTextBox.Text}#{(taskList.SelectedItem as MyTask).Id}#{taskName}#{startDate}#{endDate}#{status}#{DescriptionTextBox.Text}";
+            try
+            {
+                client = new TcpClient();
+                client.Connect(ep);
+                NetworkStream ns = client.GetStream();
+                ns.ReadTimeout = Ntimeout;
+                StreamWriter sw = new StreamWriter(ns);
+                sw.WriteLine(sendString);
+                sw.Flush();
+
+                StreamReader sr = new StreamReader(ns);
+                sr.ReadLine();
+
+                sr.Close();
+                
+                sw.Close();
+                ns.Close();
+                client.Close();
+                Console.WriteLine(2);
+                tasks_button.PerformClick();
+                Console.WriteLine(1);
+
+
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show($"{err.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

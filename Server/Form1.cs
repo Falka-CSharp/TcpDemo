@@ -50,10 +50,12 @@ namespace Server
                 listenerThread.Start();
 
                 dm = new DataManager();
-                dm.InitData();
+                //dm.InitData();
+                dm.LoadData();
                 Journal.Text += DateTime.Now + " > Data loaded!\r\n";
             }catch(Exception er)
             {
+                
                 MessageBox.Show($"Error\r\n{er.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
@@ -63,16 +65,17 @@ namespace Server
         {
             while (true)
             {
-                TcpClient acceptor = listener.AcceptTcpClient();
+                try
+                {
+                    TcpClient acceptor = listener.AcceptTcpClient();
                 NetworkStream ns = acceptor.GetStream();
                 StreamReader sr = new StreamReader(ns);
                 StreamWriter sw = new StreamWriter(ns);
-                //string clientMessage = sr.ReadToEnd();
+
                 string clientMessage = sr.ReadLine();
                 string clientIp = ((IPEndPoint)(acceptor.Client.RemoteEndPoint)).Address.ToString();
                 string[] parts = clientMessage.Split('#');
-                try
-                {
+                
                     if (parts.Length > 1)
                     {
                         string command = parts[0];
@@ -81,7 +84,7 @@ namespace Server
                             if (Journal.InvokeRequired)
                                 Journal.Invoke(new MethodInvoker(delegate { Journal.Text += "AUTH-mode activated\r\n"; }));
                             else
-                                Journal.Text += "AUTH-mode activated\r\n";
+                                Journal.Text += "AUTH requested\r\n";
 
                             string login = parts[1];
                             string passw = parts[2];
@@ -119,9 +122,9 @@ namespace Server
                         }
                         else
                         {
-                            Console.WriteLine(authorizedClients.Count);
-                            Console.WriteLine(authorizedClients[0].Ip);
-                            Console.WriteLine(authorizedClients[0].Username);
+                            //Console.WriteLine(authorizedClients.Count);
+                           // Console.WriteLine(authorizedClients[0].Ip);
+                            //Console.WriteLine(authorizedClients[0].Username);
                             if (authorizedClients.Where(a => clientIp == a.Ip && parts[1] == a.Username).ToList().Count == 0)
                             {
                                 Journal.Invoke(new Action(() => { Journal.Text += $"{clientIp} - connection refused / authorizaion required\r\n"; }));
@@ -133,7 +136,7 @@ namespace Server
                             if (command == "get")
                             {
                                 //Send tasks list
-                                Journal.Invoke(new Action(() => { Journal.Text += $"GET-mode activated - {clientMessage}\r\n"; }));
+                                Journal.Invoke(new Action(() => { Journal.Text += $"GET requested - {clientMessage}\r\n"; }));
                                 List<MyTask> userTasks = dm.Repos.MyTasks.Where(t => t.User == parts[1]).ToList();
                                 string json = JsonSerializer.Serialize(userTasks);
                                 sw.WriteLine(json);
@@ -142,26 +145,58 @@ namespace Server
                             }
                             else if (command == "add")
                             {
+                                int newId = dm.Repos.MyTasks[dm.Repos.MyTasks.Count - 1].Id+1;
+                                dm.Repos.MyTasks.Add(new MyTask() {Id = newId, User = parts[1],Start=DateTime.Now,Finish=DateTime.Now,Status="No data",About="No data",Title="No data" });
+                                dm.SaveData();
 
+
+                                sw.WriteLine("END");
+                                sw.Flush();
                             }
                             else if (command == "edit")
                             {
+                                Journal.Invoke(new Action(() => { Journal.Text += $"EDIT requested - {clientMessage}\r\n"; }));
 
+                                for(int i = 0; i < dm.Repos.MyTasks.Count; i++)
+                                {
+                                    if(dm.Repos.MyTasks[i].Id == int.Parse(parts[2]))
+                                    {
+                                        MyTask tmp = dm.Repos.MyTasks[i];
+                                        tmp.Title = parts[3];
+                                        tmp.Start = DateTime.Parse(parts[4]);
+                                        tmp.Finish = DateTime.Parse(parts[5]);
+                                        tmp.Status = parts[6];
+                                        tmp.About = parts[7];
+                                    }
+                                }
+                                dm.SaveData();
+                                sw.WriteLine("END");
+                                sw.Flush();
                             }
                             else if (command == "delete")
                             {
 
+                            }else if(command== "disconnect")
+                            {
+                                authorizedClients.RemoveAll(a => a.Ip == clientIp);
+                                Journal.Invoke(new Action(() => { Journal.Text += $"Client disconnected\r\n"; }));
+
+                                sw.WriteLine("END");
+                                sw.Flush();
                             }
+                            
                         }
                     }
-                }catch(Exception er)
+                    sw.Close();
+                    sr.Close();
+                    ns.Close();
+                    acceptor.Close();
+                }
+                catch(Exception er)
                 {
                     MessageBox.Show($"Error!\r\n{er.Message}", "Reciving error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                sw.Close();
-                sr.Close();
-                ns.Close();
-                acceptor.Close();
+                
             }
         }
 

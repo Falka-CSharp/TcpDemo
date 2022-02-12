@@ -106,6 +106,7 @@ namespace Client
             this.loginTextBox.Name = "loginTextBox";
             this.loginTextBox.Size = new System.Drawing.Size(100, 24);
             this.loginTextBox.TabIndex = 10;
+            this.loginTextBox.Text = "student";
             this.loginTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label3
@@ -124,6 +125,7 @@ namespace Client
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.Size = new System.Drawing.Size(100, 24);
             this.passwordTextBox.TabIndex = 12;
+            this.passwordTextBox.Text = "12345";
             this.passwordTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label4
@@ -145,6 +147,7 @@ namespace Client
             this.disconnectButton.TabIndex = 13;
             this.disconnectButton.Text = "Disconnect";
             this.disconnectButton.UseVisualStyleBackColor = true;
+            this.disconnectButton.Click += new System.EventHandler(this.disconnectButton_Click);
             // 
             // connectButton
             // 
@@ -199,6 +202,7 @@ namespace Client
             this.edit_button.TabIndex = 18;
             this.edit_button.Text = "Edit";
             this.edit_button.UseVisualStyleBackColor = true;
+            this.edit_button.Click += new System.EventHandler(this.edit_button_Click);
             // 
             // add_button
             // 
@@ -209,6 +213,7 @@ namespace Client
             this.add_button.TabIndex = 17;
             this.add_button.Text = "Add";
             this.add_button.UseVisualStyleBackColor = true;
+            this.add_button.Click += new System.EventHandler(this.add_button_Click);
             // 
             // groupBox2
             // 
