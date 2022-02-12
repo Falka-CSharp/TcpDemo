@@ -192,6 +192,7 @@ namespace Client
             this.delete_button.TabIndex = 19;
             this.delete_button.Text = "Delete";
             this.delete_button.UseVisualStyleBackColor = true;
+            this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
             // 
             // edit_button
             // 

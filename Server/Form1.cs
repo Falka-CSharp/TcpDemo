@@ -175,8 +175,15 @@ namespace Server
                             }
                             else if (command == "delete")
                             {
+                                Journal.Invoke(new Action(() => { Journal.Text += $"Delete requested - {clientMessage}\r\n"; }));
 
-                            }else if(command== "disconnect")
+                                int DelId = int.Parse(parts[2]);
+                                dm.Repos.MyTasks.RemoveAll(task => task.Id == DelId);
+                                dm.SaveData();
+                                sw.WriteLine("END");
+                                sw.Flush();
+                            }
+                            else if(command== "disconnect")
                             {
                                 authorizedClients.RemoveAll(a => a.Ip == clientIp);
                                 Journal.Invoke(new Action(() => { Journal.Text += $"Client disconnected\r\n"; }));

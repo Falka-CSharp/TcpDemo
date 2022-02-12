@@ -203,20 +203,49 @@ namespace Client
                 sr.ReadLine();
 
                 sr.Close();
-                
                 sw.Close();
                 ns.Close();
                 client.Close();
-                Console.WriteLine(2);
                 tasks_button.PerformClick();
-                Console.WriteLine(1);
-
-
             }
             catch (Exception err)
             {
                 MessageBox.Show($"{err.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void delete_button_Click(object sender, EventArgs e)
+        {
+            if (taskList.SelectedItem != null)
+            {
+                int id = (taskList.SelectedItem as MyTask).Id;
+                try
+                {
+                    client = new TcpClient();
+                    client.Connect(ep);
+                    NetworkStream ns = client.GetStream();
+                    ns.ReadTimeout = Ntimeout;
+                    StreamWriter sw = new StreamWriter(ns);
+                    sw.WriteLine($"delete#{loginTextBox.Text}#{id}");
+                    sw.Flush();
+
+                    StreamReader sr = new StreamReader(ns);
+                    sr.ReadLine();
+
+                    sr.Close();
+                    sw.Close();
+                    ns.Close();
+                    client.Close();
+
+                    tasks_button.PerformClick();
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show($"{err.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }else
+                MessageBox.Show("Item not selected!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
         }
     }
 }
